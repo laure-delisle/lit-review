@@ -9,28 +9,28 @@ Object detection requires localization.
 - Region extraction: construct region tree using hierarchical segmentation engine  
 **From contours to regions: An empirical evaluation** [[url](https://vision.ics.uci.edu/papers/ArbelaezMFM_CVPR_2009/ArbelaezMFM_CVPR_2009.pdf)](_Arbelaez et al. CVPR 2009_)  
 Oriented Watershed Transform (OWT) to form initial regions from contours, followed by construction of an Ultrametric Contour Map (UCM) defining a hierarchical segmentation.  
-[[https://github.com/laure-delisle/lit-review/blob/master/docs/img/contours_to_regions.png|alt=Contours to regions]]
+[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/contours_to_regions.png|alt=Contours to regions]]
 
 - **Recovering occlusion boundaries from an image** [[url](https://www.ri.cmu.edu/pub_files/pub4/hoiem_derek_2007_3/hoiem_derek_2007_3.pdf)](_Hoeim et al. ICCV 2007_)  
 Segmentation using occlusion boundaries.  
-[[../img/object_detection/occlusion_recovery.png|alt=Occlusion recovery]]
+[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/occlusion_recovery.png|alt=Occlusion recovery]]
 
 **2-** Region proposal
 
 - **Category independent proposal** [[ur](http://dhoiem.cs.illinois.edu/publications/eccv2010_CategoryIndependentProposals_ian.pdf)](_Endres et Hoeim, ECCV 2010_)  
 Hierarchical segmentation with agglomerative grouping, based on boundary strength. Then groups newly obtained regions with seeding: starting from a region, appearance and boundaries around the seed are used to identify other regions that might belong to the same object. Uses _Hoeim 2007_  
-[[https://github.com/laure-delisle/lit-review/blob/master/docs/img/category_independent_proposal.png|alt=Category independent proposal]]
+[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/category_independent_proposal.png|alt=Category independent proposal]]
 
 
 - **Recognition using regions** [[url](http://www-bcf.usc.edu/~limjj/paper/glam_cvpr09.pdf)]
 (_Gu et al., 2009 CVPR_), used for both object detection and semantic segmentation.  
 Produces a "robust bag" of overlaid regions (Region=set of image cues (color, texture, shape)), learns region weights using a max-margin framework. Uses _Arbelaez 2009_  
-[[https://github.com/laure-delisle/lit-review/blob/master/docs/img/region_tree.png|alt=Region tree]]
+[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/region_tree.png|alt=Region tree]]
 
 - **Region Proposal Networks** [[url](https://arxiv.org/pdf/1506.01497)]
 (_Gu et al., 2009 CVPR_), used for both object detection and semantic segmentation.  
 Produces a "robust bag" of overlaid regions (Region=set of image cues (color, texture, shape)), learns region weights using a max-margin framework. Uses _Arbelaez 2009_  
-[[https://github.com/laure-delisle/lit-review/blob/master/docs/img/region_tree.png|alt=Region tree]]
+[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/region_tree.png|alt=Region tree]]
 
 
 **3-** Evaluate how good/relevant the extracted regions are
@@ -41,7 +41,7 @@ background elements, such as grass and road. The measure combines in a Bayesian 
 . well-defined closed boundary in space [Edge density, Superpixels straddling],  
 . different appearance from its surroundings [Color contrast],  
 . unique within the image and stands out as salient [Multi-scale saliency].  
-[[https://github.com/laure-delisle/lit-review/blob/master/docs/img/objectness.png|alt=Objectness]]
+[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/objectness.png|alt=Objectness]]
 
 ### R-CNN (region) [[url](https://arxiv.org/pdf/1311.2524.pdf])]
 > _Girshick et al., UC Berkeley, 2014 CVPR_
@@ -77,7 +77,7 @@ For generic feature extraction. Uses a pyramidal structure with:
 
 Prediction: 3×3 convolution is appended on each merged map to generate the final feature map, which is to reduce the aliasing effect of upsampling
 
-[[https://github.com/laure-delisle/lit-review/blob/master/docs/img/fpn_structure.png|alt=FPN structure]]
+[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/fpn_structure.png|alt=FPN structure]]
 
 **Related work**  
 - _Adelson 1984 - Pyramid methods in image processing_  
