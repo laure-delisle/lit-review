@@ -2,46 +2,52 @@
 
 Object detection requires localization.
 
-**First step**: extract regions of interest.
+## Extract Regions Of Interest (ROI)
+Sequential steps of region extraction, region proposal, evaluation of ROI relevance.
 
-**1-** Segmentation
+### 1- Region extraction
 
-- Region extraction: construct region tree using hierarchical segmentation engine  
-**From contours to regions: An empirical evaluation** [[url](https://vision.ics.uci.edu/papers/ArbelaezMFM_CVPR_2009/ArbelaezMFM_CVPR_2009.pdf)](_Arbelaez et al. CVPR 2009_)  
+Construct region tree using hierarchical segmentation engine, either with contours or occlusion boundaries. In this step, we segment the whole image and attribute a region to each pixel, in a hierarchical manner.  
+
+- **From contours to regions: An empirical evaluation** [[url](https://vision.ics.uci.edu/papers/ArbelaezMFM_CVPR_2009/ArbelaezMFM_CVPR_2009.pdf)](_Arbelaez et al. CVPR 2009_)  
 Oriented Watershed Transform (OWT) to form initial regions from contours, followed by construction of an Ultrametric Contour Map (UCM) defining a hierarchical segmentation.  
-![Contours to regions](https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/contours_to_regions.png)
+![Contours to regions](./img/object_detection/contours_to_regions.png)
 
 - **Recovering occlusion boundaries from an image** [[url](https://www.ri.cmu.edu/pub_files/pub4/hoiem_derek_2007_3/hoiem_derek_2007_3.pdf)](_Hoeim et al. ICCV 2007_)  
 Segmentation using occlusion boundaries.  
-![Occlusion recovery](./img/object_detection/occlusion_recovery.png)
+[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/occlusion_recovery.png|alt=Occlusion recovery]]
 
-**2-** Region proposal
+### 2- Region proposal
+
+From hierachical segmentation, we construct regions of interest, either by agglomerative grouping, bagging or using RPN (new approach by Faster R-CNN).
 
 - **Category independent proposal** [[ur](http://dhoiem.cs.illinois.edu/publications/eccv2010_CategoryIndependentProposals_ian.pdf)](_Endres et Hoeim, ECCV 2010_)  
 Hierarchical segmentation with agglomerative grouping, based on boundary strength. Then groups newly obtained regions with seeding: starting from a region, appearance and boundaries around the seed are used to identify other regions that might belong to the same object. Uses _Hoeim 2007_  
-[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/category_independent_proposal.png|alt=Category independent proposal]]
+![Category independent proposal](./img/object_detection/category_independent_proposal.png)
 
 
 - **Recognition using regions** [[url](http://www-bcf.usc.edu/~limjj/paper/glam_cvpr09.pdf)]
 (_Gu et al., 2009 CVPR_), used for both object detection and semantic segmentation.  
 Produces a "robust bag" of overlaid regions (Region=set of image cues (color, texture, shape)), learns region weights using a max-margin framework. Uses _Arbelaez 2009_  
-[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/region_tree.png|alt=Region tree]]
+![Region tree](./img/object_detection/region_tree.png)
 
-- **Region Proposal Networks** [[url](https://arxiv.org/pdf/1506.01497)]
-(_Gu et al., 2009 CVPR_), used for both object detection and semantic segmentation.  
-Produces a "robust bag" of overlaid regions (Region=set of image cues (color, texture, shape)), learns region weights using a max-margin framework. Uses _Arbelaez 2009_  
-[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/region_tree.png|alt=Region tree]]
+- **Region Proposal Networks** (_Faster R-CNN_)   
+Produces a set of rectangular region proposals each with an objectness score, from an _n x n_ window input taken from a feature map.  
+After mapping to a lower dimension feature map, this _n x n_ window is fed to two sibling _1 x 1_ conv networks: **box-regression** layer (reg) and **box-classification** layer (cls). At each sliding-window location, we simultaneously predict _k_ region proposals. The reg layer has 4k outputs encoding the coordinates of k boxes, and the cls layer outputs 2k scores that estimate probability of object or not object for each proposal. The k proposals are parameterized relative to k reference boxes, which we call **anchors**. An anchor is centered at the sliding window in question, and is associated with a scale and aspect ratio. By default RPN use 3 scales and 3 aspect ratios, yielding k = 9 anchors at each sliding position. For a convolutional feature map of a size W × H, there are W x H x k anchors in total.   
+note: this method is translation invariant (in terms of anchors and function prediction the ROI based on the anchor).   
+![Region Proposal Networks](./img/object_detection/region_proposal_networks.png)
 
 
-**3-** Evaluate how good/relevant the extracted regions are
+### 3- Evaluate how good/relevant the extracted regions are
 
 - **Measuring the objectness of image windows** [[url](http://calvin.inf.ed.ac.uk/wp-content/uploads/Publications/alexe12pami.pdf)](_Alexe et al., TPAMI 2012_)  
 Distinguish objects with a well-defined boundary in space, such as cows and telephones, from amorphous
 background elements, such as grass and road. The measure combines in a Bayesian framework several image cues measuring characteristics of objects:  
 . well-defined closed boundary in space [Edge density, Superpixels straddling],  
 . different appearance from its surroundings [Color contrast],  
-. unique within the image and stands out as salient [Multi-scale saliency].  
-[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/objectness.png|alt=Objectness]]
+. unique within the image and stands out as salient [Multi-scale saliency].   
+note: Region Proposal Networks (RPN) output this along the ROI (same step).  
+![Objectness](./img/object_detection/objectness.png)
 
 ### R-CNN (region) [[url](https://arxiv.org/pdf/1311.2524.pdf])]
 > _Girshick et al., UC Berkeley, 2014 CVPR_
@@ -77,7 +83,7 @@ For generic feature extraction. Uses a pyramidal structure with:
 
 Prediction: 3×3 convolution is appended on each merged map to generate the final feature map, which is to reduce the aliasing effect of upsampling
 
-[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/fpn_structure.png|alt=FPN structure]]
+![FPN structure](./img/object_detection/fpn_structure.png)
 
 **Related work**  
 - _Adelson 1984 - Pyramid methods in image processing_  
