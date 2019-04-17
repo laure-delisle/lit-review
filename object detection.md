@@ -9,11 +9,11 @@ Object detection requires localization.
 - Region extraction: construct region tree using hierarchical segmentation engine  
 **From contours to regions: An empirical evaluation** [[url](https://vision.ics.uci.edu/papers/ArbelaezMFM_CVPR_2009/ArbelaezMFM_CVPR_2009.pdf)](_Arbelaez et al. CVPR 2009_)  
 Oriented Watershed Transform (OWT) to form initial regions from contours, followed by construction of an Ultrametric Contour Map (UCM) defining a hierarchical segmentation.  
-[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/contours_to_regions.png|alt=Contours to regions]]
+![Contours to regions](https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/contours_to_regions.png)
 
 - **Recovering occlusion boundaries from an image** [[url](https://www.ri.cmu.edu/pub_files/pub4/hoiem_derek_2007_3/hoiem_derek_2007_3.pdf)](_Hoeim et al. ICCV 2007_)  
 Segmentation using occlusion boundaries.  
-[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/occlusion_recovery.png|alt=Occlusion recovery]]
+![Occlusion recovery](./img/object_detection/occlusion_recovery.png)
 
 **2-** Region proposal
 
