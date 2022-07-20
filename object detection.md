@@ -25,7 +25,7 @@ Oriented Watershed Transform (OWT) to form initial regions from contours, follow
 
 - **Recovering occlusion boundaries from an image** [[url](https://www.ri.cmu.edu/pub_files/pub4/hoiem_derek_2007_3/hoiem_derek_2007_3.pdf)](_Hoeim et al. ICCV 2007_)  
 Segmentation using occlusion boundaries.  
-[[https://github.com/laure-delisle/lit-review/blob/master/img/object_detection/occlusion_recovery.png|alt=Occlusion recovery]]
+![Occlusion recovery](./img/object_detection/occlusion_recovery.png)
 
 ### 2- Region proposal
 
